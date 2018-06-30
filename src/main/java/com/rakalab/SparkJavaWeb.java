@@ -1,25 +1,26 @@
 package com.rakalab;
 
+import com.google.gson.Gson;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 import spark.Spark;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 public class SparkJavaWeb {
-    public static void main(String[] args) {
-        setupLogger();
-        Spark.get("/hello",
-                (req, res) -> String.format("Hello, %s",
-                        req.queryMap().toMap()
-                        .entrySet()
-                        .stream()
-                        .map(e -> e.getKey() + "=" + Arrays.toString(e.getValue()))
-                        .collect(Collectors.toList())
-                ));
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    static class UserData {
+        int id;
+        String name;
     }
 
-    private static void setupLogger() {
+    public static void main(String[] args) {
+        Gson gson = new Gson();
+        Spark.get("/hello",
+                (req, res) -> new UserData(1, req.queryParams("name")),
+                gson::toJson);
 
     }
 }

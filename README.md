@@ -2,4 +2,4 @@
 
 Sample application to try some use cases
 - simple web app
-- add spring container to web app
+- todo: add spring container to web app
