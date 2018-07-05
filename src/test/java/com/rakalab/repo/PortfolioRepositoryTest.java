@@ -9,8 +9,8 @@ public class PortfolioRepositoryTest {
     PortfolioRepository portfolioRepository = new PortfolioRepository();
 
     @Test
-    public void shouldAddPortfolio() {
-        portfolioRepository.add(
+    public void shouldSavePortfolio() {
+        portfolioRepository.save(
                 Portfolio.builder()
                         .id(1)
                         .name("portfolio-1")
@@ -20,5 +20,24 @@ public class PortfolioRepositoryTest {
         Assertions.assertThat(portfolioRepository.get(1))
                 .isNotNull()
                 .hasFieldOrPropertyWithValue("name", "portfolio-1");
+    }
+
+    @Test
+    public void shouldDeletePortfolio() {
+        portfolioRepository.save(
+                Portfolio.builder()
+                        .id(1)
+                        .name("portfolio-1")
+                        .build()
+        );
+
+        Assertions.assertThat(portfolioRepository.get(1))
+                .isNotNull()
+                .hasFieldOrPropertyWithValue("name", "portfolio-1");
+
+        portfolioRepository.delete(1);
+
+        Assertions.assertThat(portfolioRepository.get(1))
+                .isNull();
     }
 }
